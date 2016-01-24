@@ -10,11 +10,16 @@ def test_create_string_2_1():
 
 def test_create_string_all():
     ab = AB.AB()
+    test_results = {}
     for N in range(2, 51):
         max_k = N * (N - 1) / 2
         for K in range(0, int(max_k + 1)):
             result = ab.createString(N, K)
-            assert _count_pairs(result) == K, "N={} and K={}".format(N, K)
+            test_results[(N, K)] = (_count_pairs(result) == K)
+
+    print("Total tests: {}".format(len(test_results)))
+    print("Passed tests: {}".format(list(test_results.values()).count(True)))
+    print("Failed tests: {}".format(list(test_results.values()).count(False)))
 
 
 def _count_pairs(string):
@@ -25,3 +30,7 @@ def _count_pairs(string):
         return string.count('B') + _count_pairs(string[1:])
     else:
         return _count_pairs(string[1:])
+
+
+if __name__ == '__main__':
+    test_create_string_all()
